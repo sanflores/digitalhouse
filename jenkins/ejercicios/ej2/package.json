@@ -1,0 +1,13 @@
+{
+"name": "mi_app_nodejs",
+"version": "1.0.0",
+"description": "Node.js en Docker",
+"author": "Digital House <digitalhouse@example.com>",
+"main": "index.js",
+"scripts": {
+"start": "node index.js"
+},
+"dependencies": {
+"express": "^4.16.1"
+}
+}
