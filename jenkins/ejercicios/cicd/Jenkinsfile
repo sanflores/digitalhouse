@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-      maven "maven-nodo-principal"
+      maven "maven-1.0"
     }
     stages {
         stage('Build') {
@@ -13,12 +13,21 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                dir('jenkins/ejercicios/cicd/infra-ii') {
+                    sh 'mvn test'
+                }
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+            }
+        }
+    }
+    post {
+        success {
+            dir (‘maven-adderapp’) {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
     }
