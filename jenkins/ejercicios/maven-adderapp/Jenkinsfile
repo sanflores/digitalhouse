@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                dir('jenkins/ejercicios/maven-adderapp-ii') {
+                dir('jenkins/ejercicios/maven-adderapp') {
                     sh 'mvn test'
                 }
             }
@@ -26,12 +26,12 @@ pipeline {
     }
     post {
        always {
-           dir('jenkins/ejercicios/maven-adderapp-ii') {
+           dir('jenkins/ejercicios/maven-adderapp') {
                junit 'target/surefire-reports/*.xml'
            }
        }
        success {
-           dir('jenkins/ejercicios/maven-adderapp-ii') {
+           dir('jenkins/ejercicios/maven-adderapp') {
              archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
            }
        }
