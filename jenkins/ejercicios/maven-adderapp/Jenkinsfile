@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    tools {
+      maven "maven-nodo-principal"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                dir('jenkins/ejercicios/maven-adderapp') {
+                    sh 'mvn -DskipTests clean package'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('jenkins/ejercicios/maven-adderapp-ii') {
+                    sh 'mvn test'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+    post {
+       always {
+           dir('jenkins/ejercicios/maven-adderapp-ii') {
+               junit 'target/surefire-reports/*.xml'
+           }
+       }
+       success {
+           dir('jenkins/ejercicios/maven-adderapp-ii') {
+             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+           }
+       }
+    }
+}
